@@ -1,0 +1,60 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="CourierDelivery.Views.MainWindow"
+        Title="КурьерЭкспресс"
+        Width="1200" Height="760" MinWidth="1024" MinHeight="680"
+        WindowStartupLocation="CenterScreen"
+        Icon="avares://CourierDelivery/Assets/courier.ico">
+
+    <Grid RowDefinitions="60,*,32">
+
+        <!-- 1. ШАПКА: логотип, вкладки, пользователь справа сверху -->
+        <Border Grid.Row="0" Background="{StaticResource HeaderBrush}" Padding="18,0,14,0">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Center" Margin="0,0,22,0">
+                    <Image Source="avares://CourierDelivery/Assets/logo.png" Width="36" Height="36"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="КурьерЭкспресс" Foreground="White" FontSize="16" FontWeight="Bold"/>
+                        <TextBlock Text="служба доставки" Foreground="{StaticResource HeaderTextBrush}" FontSize="11"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Вкладки: видимость зависит от роли -->
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Button x:Name="TariffsTab" Content="Тарифы" Classes="tab" Click="TariffsClick"/>
+                    <Button x:Name="OrdersTab" Content="Заказы" Classes="tab" Click="OrdersClick"/>
+                    <Button x:Name="NewOrderTab" Content="Новый заказ" Classes="tab" Click="NewOrderClick"/>
+                    <Button x:Name="CouriersTab" Content="Курьеры" Classes="tab" Click="CouriersClick"/>
+                    <Button x:Name="ZonesTab" Content="Зоны и тарифы" Classes="tab" Click="ZonesClick"/>
+                    <Button x:Name="StaffTab" Content="Сотрудники" Classes="tab" Click="StaffClick"/>
+                </StackPanel>
+
+                <!-- ФИО и роль текущего пользователя -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <TextBlock x:Name="UserText" Text="Гость" Foreground="White" FontWeight="SemiBold"
+                                   TextAlignment="Right" TextWrapping="NoWrap"/>
+                        <TextBlock x:Name="RoleText" Text="вход не выполнен" FontSize="12" TextAlignment="Right"
+                                   Foreground="{StaticResource AccentBrush}" TextWrapping="NoWrap"/>
+                    </StackPanel>
+                    <Button x:Name="AuthButton" Content="Войти" Classes="amber" Click="AuthClick"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 2. РАБОЧАЯ ОБЛАСТЬ -->
+        <ContentControl Grid.Row="1" x:Name="PageHost" Margin="24,18"/>
+
+        <!-- 3. СТРОКА СООБЩЕНИЙ (ошибки и результаты операций) -->
+        <Border Grid.Row="2" x:Name="StatusBar" Background="{StaticResource SurfaceBrush}"
+                BorderBrush="{StaticResource LineBrush}" BorderThickness="0,1,0,0" Padding="16,0">
+            <Grid ColumnDefinitions="Auto,*,Auto">
+                <Border x:Name="StatusDot" Width="10" Height="10" CornerRadius="5" Margin="0,0,10,0"
+                        Background="{StaticResource DoneBrush}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" x:Name="StatusText" Text="Готово к работе" VerticalAlignment="Center"
+                           TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontSize="13"/>
+                <TextBlock Grid.Column="2" x:Name="PageText" Classes="muted" FontSize="12" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

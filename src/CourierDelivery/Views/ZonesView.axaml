@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CourierDelivery.Views.ZonesView"
+             Tag="Справочник зон доставки">
+
+    <Grid ColumnDefinitions="*,20,360" RowDefinitions="Auto,*">
+        <StackPanel Grid.ColumnSpan="3" Spacing="2" Margin="0,0,0,14">
+            <TextBlock Text="Зоны доставки и тарифы" Classes="title"/>
+            <TextBlock Classes="muted" FontSize="13"
+                       Text="Изменение тарифа действует только для новых заказов: стоимость старых заказов сохранена."/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Classes="panel" Padding="0">
+            <ListBox x:Name="ZonesList" Classes="table" SelectionChanged="ZoneSelected">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnDefinitions="*,120" Margin="14,10">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold"/>
+                                <TextBlock Text="{Binding Description}" Classes="muted" FontSize="12"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="1" Text="{Binding RateText}" FontWeight="SemiBold"
+                                       TextAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="2" Classes="panel" VerticalAlignment="Top" Padding="20">
+            <StackPanel Spacing="10">
+                <TextBlock x:Name="FormTitle" Text="Новая зона" Classes="subtitle"/>
+                <StackPanel>
+                    <TextBlock Text="Название" Classes="caption"/>
+                    <TextBox x:Name="NameBox"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Тариф за 1 кг, руб." Classes="caption"/>
+                    <NumericUpDown x:Name="RateBox" Minimum="1" Maximum="100000" Increment="10" Value="150" FormatString="0.##"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Описание (районы)" Classes="caption"/>
+                    <TextBox x:Name="DescriptionBox" AcceptsReturn="True" TextWrapping="Wrap" Height="70"/>
+                </StackPanel>
+                <Button Content="Сохранить" Classes="amber" HorizontalAlignment="Stretch" Click="SaveClick"/>
+                <Grid ColumnDefinitions="*,10,*">
+                    <Button Content="Новая зона" Classes="outline" HorizontalAlignment="Stretch" Click="NewClick"/>
+                    <Button Grid.Column="2" x:Name="DeleteButton" Content="Удалить" Classes="danger"
+                            HorizontalAlignment="Stretch" IsEnabled="False" Click="DeleteClick"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

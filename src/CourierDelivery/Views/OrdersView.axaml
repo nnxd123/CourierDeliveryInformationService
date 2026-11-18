@@ -1,0 +1,129 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CourierDelivery.Views.OrdersView"
+             Tag="Список заказов">
+
+    <DockPanel>
+        <!-- ЗАГОЛОВОК И СЧЁТЧИКИ -->
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="0,0,0,14">
+            <StackPanel Spacing="2">
+                <TextBlock x:Name="TitleText" Text="Заказы" Classes="title"/>
+                <TextBlock x:Name="SubtitleText" Classes="muted" FontSize="13"
+                           Text="Щёлкните по строке, чтобы открыть карточку заказа"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                <Button Content="Обновить" Classes="outline" Click="ReloadClick"/>
+                <Button x:Name="NewButton" Content="+ Новый заказ" Classes="amber" Click="NewClick"/>
+            </StackPanel>
+        </Grid>
+
+        <UniformGrid DockPanel.Dock="Top" Columns="4" Margin="0,0,0,14">
+            <Border Classes="panel stat" Margin="0,0,6,0">
+                <StackPanel>
+                    <TextBlock Text="Новые" Classes="caption"/>
+                    <TextBlock x:Name="NewCount" Text="0" FontSize="22" FontWeight="Bold" Foreground="{StaticResource NewBrush}"/>
+                </StackPanel>
+            </Border>
+            <Border Classes="panel stat" Margin="3,0">
+                <StackPanel>
+                    <TextBlock Text="В работе" Classes="caption"/>
+                    <TextBlock x:Name="WorkCount" Text="0" FontSize="22" FontWeight="Bold" Foreground="{StaticResource WorkBrush}"/>
+                </StackPanel>
+            </Border>
+            <Border Classes="panel stat" Margin="3,0">
+                <StackPanel>
+                    <TextBlock Text="Выполнены" Classes="caption"/>
+                    <TextBlock x:Name="DoneCount" Text="0" FontSize="22" FontWeight="Bold" Foreground="{StaticResource DoneBrush}"/>
+                </StackPanel>
+            </Border>
+            <Border Classes="panel stat" Margin="6,0,0,0">
+                <StackPanel>
+                    <TextBlock x:Name="SumLabel" Text="Сумма выполненных" Classes="caption"/>
+                    <TextBlock x:Name="SumText" Text="0 руб." FontSize="22" FontWeight="Bold"/>
+                </StackPanel>
+            </Border>
+        </UniformGrid>
+
+        <!-- ПОИСК, ФИЛЬТР, СОРТИРОВКА -->
+        <Grid DockPanel.Dock="Top" ColumnDefinitions="*,10,200,10,200" Margin="0,0,0,10">
+            <TextBox x:Name="SearchBox" PlaceholderText="Поиск по номеру заказа или ФИО клиента..."
+                     TextChanged="SearchChanged"/>
+            <ComboBox Grid.Column="2" x:Name="StatusFilter" HorizontalAlignment="Stretch"
+                      SelectionChanged="FilterChanged">
+                <ComboBoxItem Content="Все статусы"/>
+                <ComboBoxItem Content="Новый"/>
+                <ComboBoxItem Content="В работе"/>
+                <ComboBoxItem Content="Выполнен"/>
+                <ComboBoxItem Content="Отменён"/>
+            </ComboBox>
+            <ComboBox Grid.Column="4" x:Name="SortBox" HorizontalAlignment="Stretch"
+                      SelectionChanged="FilterChanged">
+                <ComboBoxItem Content="Сначала новые"/>
+                <ComboBoxItem Content="Сначала старые"/>
+            </ComboBox>
+        </Grid>
+
+        <TextBlock DockPanel.Dock="Bottom" x:Name="CountText" Classes="muted" FontSize="12" Margin="0,8,0,0"/>
+
+        <!-- ТАБЛИЦА ЗАКАЗОВ -->
+        <Border Classes="panel" Padding="0">
+            <DockPanel>
+                <Border DockPanel.Dock="Top" Background="{StaticResource HeaderBrush}" CornerRadius="6,6,0,0" Padding="14,9">
+                    <Grid ColumnDefinitions="80,125,*,150,70,150,95,110">
+                        <TextBlock Grid.Column="0" Text="№" Classes="th"/>
+                        <TextBlock Grid.Column="1" Text="Дата" Classes="th"/>
+                        <TextBlock Grid.Column="2" Text="Клиент" Classes="th"/>
+                        <TextBlock Grid.Column="3" Text="Зона" Classes="th"/>
+                        <TextBlock Grid.Column="4" Text="Вес" Classes="th"/>
+                        <TextBlock Grid.Column="5" Text="Курьер" Classes="th"/>
+                        <TextBlock Grid.Column="6" Text="Статус" Classes="th"/>
+                        <TextBlock Grid.Column="7" Text="Стоимость" Classes="th" TextAlignment="Right"/>
+                    </Grid>
+                </Border>
+
+                <Grid>
+                    <ListBox x:Name="OrdersList" Classes="table" Tapped="OrderOpened">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="80,125,*,150,70,150,95,110" Margin="14,9">
+                                    <TextBlock Grid.Column="0" Text="{Binding Number}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding DateText}" FontSize="13" VerticalAlignment="Center"/>
+                                    <StackPanel Grid.Column="2" VerticalAlignment="Center" Margin="0,0,8,0">
+                                        <TextBlock Text="{Binding ClientName}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Text="{Binding Route}" Classes="muted" FontSize="11"
+                                                   TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="3" Text="{Binding ZoneName}" FontSize="13" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="4" Text="{Binding WeightText}" FontSize="13" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="5" Text="{Binding CourierName}" FontSize="13" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="6" Classes="status"
+                                            Classes.work="{Binding IsWork}"
+                                            Classes.done="{Binding IsDone}"
+                                            Classes.cancel="{Binding IsCancelled}">
+                                        <TextBlock Text="{Binding StatusName}"/>
+                                    </Border>
+                                    <TextBlock Grid.Column="7" Text="{Binding CostText}" FontWeight="SemiBold"
+                                               TextAlignment="Right" VerticalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <TextBlock x:Name="EmptyText" IsVisible="False" Classes="muted" Text="Заказов не найдено"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </DockPanel>
+        </Border>
+    </DockPanel>
+
+    <UserControl.Styles>
+        <Style Selector="TextBlock.th">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+        <Style Selector="Border.stat">
+            <Setter Property="Padding" Value="14,10"/>
+        </Style>
+    </UserControl.Styles>
+</UserControl>

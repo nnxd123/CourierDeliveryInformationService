@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CourierDelivery.Views.StaffView"
+             Tag="Новый сотрудник">
+
+    <Border Classes="panel" Width="520" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="24">
+        <StackPanel Spacing="12">
+            <TextBlock Text="Новый сотрудник" Classes="title"/>
+            <TextBlock Classes="muted" FontSize="13"
+                       Text="Администратор создаёт учётные записи операторов и курьеров. Пароль по умолчанию — 1234."/>
+
+            <StackPanel>
+                <TextBlock Text="Роль" Classes="caption"/>
+                <ComboBox x:Name="RoleBox" HorizontalAlignment="Stretch" SelectionChanged="RoleChanged">
+                    <ComboBoxItem Content="Курьер"/>
+                    <ComboBoxItem Content="Оператор"/>
+                </ComboBox>
+            </StackPanel>
+            <Grid ColumnDefinitions="*,12,*">
+                <StackPanel>
+                    <TextBlock Text="Фамилия" Classes="caption"/>
+                    <TextBox x:Name="LastNameBox"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Имя" Classes="caption"/>
+                    <TextBox x:Name="FirstNameBox"/>
+                </StackPanel>
+            </Grid>
+            <Grid ColumnDefinitions="*,12,*">
+                <StackPanel>
+                    <TextBlock Text="Телефон" Classes="caption"/>
+                    <TextBox x:Name="PhoneBox" PlaceholderText="+7 ..."/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" x:Name="TransportPanel">
+                    <TextBlock Text="Транспорт" Classes="caption"/>
+                    <ComboBox x:Name="TransportBox" HorizontalAlignment="Stretch">
+                        <ComboBoxItem Content="Пешком"/>
+                        <ComboBoxItem Content="Велосипед"/>
+                        <ComboBoxItem Content="Автомобиль"/>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+            <Grid ColumnDefinitions="*,12,*">
+                <StackPanel>
+                    <TextBlock Text="Логин" Classes="caption"/>
+                    <TextBox x:Name="LoginBox"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Пароль" Classes="caption"/>
+                    <TextBox x:Name="PasswordBox" Text="1234"/>
+                </StackPanel>
+            </Grid>
+            <Button x:Name="SaveButton" Content="Создать учётную запись" Classes="amber"
+                    HorizontalAlignment="Stretch" Click="SaveClick"/>
+        </StackPanel>
+    </Border>
+</UserControl>

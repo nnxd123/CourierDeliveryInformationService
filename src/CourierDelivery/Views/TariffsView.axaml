@@ -1,0 +1,68 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CourierDelivery.Views.TariffsView"
+             Tag="Тарифы и расчёт стоимости">
+
+    <Grid ColumnDefinitions="*,24,380" RowDefinitions="Auto,*">
+
+        <StackPanel Grid.ColumnSpan="3" Spacing="2" Margin="0,0,0,16">
+            <TextBlock Text="Зоны доставки и тарифы" Classes="title"/>
+            <TextBlock x:Name="HintText" Classes="muted"
+                       Text="Стоимость доставки = тариф зоны за 1 кг × вес груза. Срочная доставка — коэффициент 1,5."/>
+        </StackPanel>
+
+        <!-- СПИСОК ЗОН -->
+        <ScrollViewer Grid.Row="1" Grid.Column="0">
+            <ItemsControl x:Name="ZonesList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Classes="panel" Margin="0,0,0,10" Padding="0">
+                            <Grid ColumnDefinitions="6,*,Auto">
+                                <Border Background="{StaticResource AccentBrush}" CornerRadius="6,0,0,6"/>
+                                <StackPanel Grid.Column="1" Margin="16,14" Spacing="4">
+                                    <TextBlock Text="{Binding Name}" Classes="subtitle"/>
+                                    <TextBlock Text="{Binding Description}" Classes="muted" FontSize="13"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2" Margin="16,14" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding RatePerKg, StringFormat={}{0:N0} руб.}" FontSize="22"
+                                               FontWeight="Bold" TextAlignment="Right"/>
+                                    <TextBlock Text="за 1 кг груза" Classes="muted" FontSize="12" TextAlignment="Right"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- КАЛЬКУЛЯТОР -->
+        <Border Grid.Row="1" Grid.Column="2" Classes="panel" VerticalAlignment="Top" Padding="20">
+            <StackPanel Spacing="12">
+                <TextBlock Text="Калькулятор доставки" Classes="subtitle"/>
+                <StackPanel>
+                    <TextBlock Text="Зона доставки" Classes="caption"/>
+                    <ComboBox x:Name="ZoneBox" HorizontalAlignment="Stretch" SelectionChanged="ParamsChanged"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Вес груза, кг (не более 30)" Classes="caption"/>
+                    <NumericUpDown x:Name="WeightBox" Minimum="0.1" Maximum="30" Increment="0.5" Value="1"
+                                   FormatString="0.##" ValueChanged="WeightChanged"/>
+                </StackPanel>
+                <CheckBox x:Name="UrgentBox" Content="Срочная доставка (×1,5)" IsCheckedChanged="UrgentChanged"/>
+
+                <Border Background="{StaticResource BackgroundBrush}" CornerRadius="4" Padding="14,12">
+                    <StackPanel Spacing="4">
+                        <TextBlock x:Name="FormulaText" Classes="muted" FontSize="13"/>
+                        <TextBlock x:Name="DiscountText" FontSize="13" Foreground="{StaticResource DoneBrush}" IsVisible="False"/>
+                        <TextBlock x:Name="TotalText" FontSize="26" FontWeight="Bold"/>
+                    </StackPanel>
+                </Border>
+
+                <Button x:Name="OrderButton" Content="Оформить заказ" Classes="amber"
+                        HorizontalAlignment="Stretch" Click="OrderClick"/>
+                <TextBlock x:Name="GuestText" Classes="muted" FontSize="12" TextAlignment="Center"
+                           Text="Чтобы оформить заказ, войдите или зарегистрируйтесь."/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

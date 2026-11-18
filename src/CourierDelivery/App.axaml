@@ -1,0 +1,232 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CourierDelivery.App"
+             RequestedThemeVariant="Light">
+
+    <!-- ЕДИНАЯ ЦВЕТОВАЯ СХЕМА. Все формы берут цвета отсюда через {StaticResource ...}. -->
+    <Application.Resources>
+        <!-- Основной фон рабочей области -->
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#EEF2F7" />
+        <!-- Фон карточек, таблиц и форм -->
+        <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+        <!-- Шапка окна (тёмно-синий) -->
+        <SolidColorBrush x:Key="HeaderBrush" Color="#14213D" />
+        <SolidColorBrush x:Key="HeaderSoftBrush" Color="#22335A" />
+        <SolidColorBrush x:Key="HeaderTextBrush" Color="#AEB9CF" />
+
+        <!-- Акцент (янтарный) — главные кнопки, активная вкладка -->
+        <SolidColorBrush x:Key="AccentBrush" Color="#FCA311" />
+        <SolidColorBrush x:Key="AccentHoverBrush" Color="#E08E00" />
+        <SolidColorBrush x:Key="AccentSoftBrush" Color="#FFF3DC" />
+
+        <!-- Текст и рамки -->
+        <SolidColorBrush x:Key="InkBrush" Color="#14213D" />
+        <SolidColorBrush x:Key="MutedBrush" Color="#5B6475" />
+        <SolidColorBrush x:Key="LineBrush" Color="#D9DFE8" />
+        <SolidColorBrush x:Key="RowAltBrush" Color="#F7F9FC" />
+
+        <!-- Цвета статусов заказа: Новый, В работе, Выполнен, Отменён -->
+        <SolidColorBrush x:Key="NewBrush" Color="#1D4ED8" />
+        <SolidColorBrush x:Key="NewSoftBrush" Color="#DBEAFE" />
+        <SolidColorBrush x:Key="WorkBrush" Color="#A16207" />
+        <SolidColorBrush x:Key="WorkSoftBrush" Color="#FEF3C7" />
+        <SolidColorBrush x:Key="DoneBrush" Color="#15803D" />
+        <SolidColorBrush x:Key="DoneSoftBrush" Color="#DCFCE7" />
+        <SolidColorBrush x:Key="CancelBrush" Color="#6B7280" />
+        <SolidColorBrush x:Key="CancelSoftBrush" Color="#E5E7EB" />
+
+        <!-- Ошибки и опасные действия -->
+        <SolidColorBrush x:Key="DangerBrush" Color="#DC2626" />
+        <SolidColorBrush x:Key="DangerSoftBrush" Color="#FEE2E2" />
+    </Application.Resources>
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <!-- Окно: шрифт Segoe UI 14 -->
+        <Style Selector="Window">
+            <Setter Property="FontFamily" Value="Segoe UI, Inter" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+        </Style>
+
+        <Style Selector="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+        <!-- Заголовки страниц -->
+        <Style Selector="TextBlock.title">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <Style Selector="TextBlock.subtitle">
+            <Setter Property="FontSize" Value="17" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="TextBlock.muted">
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+        </Style>
+        <!-- Подпись над полем ввода -->
+        <Style Selector="TextBlock.caption">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+            <Setter Property="Margin" Value="0,0,0,3" />
+        </Style>
+
+        <!-- Панель: белый прямоугольник с тонкой рамкой (без теней) -->
+        <Style Selector="Border.panel">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource LineBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Padding" Value="18" />
+        </Style>
+
+        <!-- Плашка статуса заказа -->
+        <Style Selector="Border.status">
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="8,2" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Background" Value="{StaticResource NewSoftBrush}" />
+        </Style>
+        <Style Selector="Border.status > TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource NewBrush}" />
+        </Style>
+        <Style Selector="Border.status.work">
+            <Setter Property="Background" Value="{StaticResource WorkSoftBrush}" />
+        </Style>
+        <Style Selector="Border.status.work > TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource WorkBrush}" />
+        </Style>
+        <Style Selector="Border.status.done">
+            <Setter Property="Background" Value="{StaticResource DoneSoftBrush}" />
+        </Style>
+        <Style Selector="Border.status.done > TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource DoneBrush}" />
+        </Style>
+        <Style Selector="Border.status.cancel">
+            <Setter Property="Background" Value="{StaticResource CancelSoftBrush}" />
+        </Style>
+        <Style Selector="Border.status.cancel > TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource CancelBrush}" />
+        </Style>
+
+        <!-- Поля ввода -->
+        <Style Selector="TextBox, ComboBox, NumericUpDown">
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="MinHeight" Value="34" />
+        </Style>
+        <Style Selector="TextBox:focus /template/ Border#PART_BorderElement">
+            <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+        </Style>
+
+        <!-- Кнопки -->
+        <Style Selector="Button">
+            <Setter Property="Padding" Value="14,7" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
+        <!-- Главная кнопка: янтарная, тёмный текст -->
+        <Style Selector="Button.amber">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+        </Style>
+        <Style Selector="Button.amber:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AccentHoverBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+        </Style>
+        <!-- Второстепенная кнопка: белая с рамкой -->
+        <Style Selector="Button.outline">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource LineBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        <!-- Кнопка опасного действия (удалить, отменить) -->
+        <Style Selector="Button.danger">
+            <Setter Property="Background" Value="{StaticResource DangerSoftBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+        </Style>
+        <Style Selector="Button.danger:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource DangerBrush}" />
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <!-- Кнопка «Назад» -->
+        <Style Selector="Button.back">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+            <Setter Property="Padding" Value="0,4" />
+            <Setter Property="FontWeight" Value="Normal" />
+        </Style>
+        <Style Selector="Button.back:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource InkBrush}" />
+        </Style>
+
+        <!-- Вкладки навигации в шапке -->
+        <Style Selector="Button.tab">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{StaticResource HeaderTextBrush}" />
+            <Setter Property="Padding" Value="14,0" />
+            <Setter Property="Height" Value="60" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="BorderThickness" Value="0,0,0,3" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Normal" />
+        </Style>
+        <Style Selector="Button.tab:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource HeaderSoftBrush}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="Button.tab.active">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="Button.tab.active:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+        </Style>
+
+        <!-- Строки таблиц (ListBox) -->
+        <Style Selector="ListBox.table">
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="ListBox.table > ListBoxItem">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderBrush" Value="{StaticResource LineBrush}" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+        </Style>
+        <Style Selector="ListBox.table > ListBoxItem:nth-child(2n)">
+            <Setter Property="Background" Value="{StaticResource RowAltBrush}" />
+        </Style>
+        <Style Selector="ListBox.table > ListBoxItem:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AccentSoftBrush}" />
+        </Style>
+        <Style Selector="ListBox.table > ListBoxItem:selected /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{StaticResource AccentSoftBrush}" />
+        </Style>
+
+        <!-- Индикатор загрузки курьера -->
+        <Style Selector="ProgressBar">
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+            <Setter Property="Background" Value="{StaticResource LineBrush}" />
+            <Setter Property="MinHeight" Value="8" />
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+        <Style Selector="ProgressBar.full">
+            <Setter Property="Foreground" Value="{StaticResource DangerBrush}" />
+        </Style>
+    </Application.Styles>
+</Application>

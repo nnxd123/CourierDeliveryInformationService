@@ -1,0 +1,41 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CourierDelivery.Views.LoginView"
+             Tag="Вход в систему">
+
+    <Border Classes="panel" Width="400" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel>
+            <!-- Цветная полоса сверху карточки -->
+            <Border Background="{StaticResource HeaderBrush}" CornerRadius="6,6,0,0" Padding="24,18">
+                <StackPanel Orientation="Horizontal" Spacing="12">
+                    <Image Source="avares://CourierDelivery/Assets/logo.png" Width="42" Height="42"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock Text="Вход в систему" Foreground="White" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock Text="КурьерЭкспресс · учёт заказов" Foreground="{StaticResource HeaderTextBrush}" FontSize="12"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Margin="24,20,24,24" Spacing="12">
+                <StackPanel>
+                    <TextBlock Text="Логин" Classes="caption"/>
+                    <TextBox x:Name="LoginBox" PlaceholderText="например, operator"/>
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock Text="Пароль" Classes="caption"/>
+                    <TextBox x:Name="PasswordBox" PasswordChar="●" PlaceholderText="пароль"/>
+                </StackPanel>
+
+                <TextBlock x:Name="ErrorText" IsVisible="False" Foreground="{StaticResource DangerBrush}" FontSize="13"/>
+
+                <Button x:Name="LoginButton" Content="Войти" Classes="amber" HorizontalAlignment="Stretch"
+                        Click="LoginClick"/>
+                <Grid ColumnDefinitions="*,Auto">
+                    <Button Content="← Назад" Classes="back" Click="BackClick"/>
+                    <Button Grid.Column="1" Content="Регистрация клиента" Classes="back"
+                            Foreground="{StaticResource NewBrush}" Click="RegisterClick"/>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</UserControl>

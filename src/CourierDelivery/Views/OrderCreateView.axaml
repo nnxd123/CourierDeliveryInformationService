@@ -1,0 +1,102 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CourierDelivery.Views.OrderCreateView"
+             Tag="Оформление заказа">
+
+    <Grid ColumnDefinitions="*,20,340">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Spacing="14" Margin="0,0,8,0">
+                <Button Content="← Назад" Classes="back" Click="BackClick"/>
+                <TextBlock Text="Новый заказ на доставку" Classes="title"/>
+
+                <!-- Клиент и параметры груза -->
+                <Border Classes="panel">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="Груз и клиент" Classes="subtitle"/>
+                        <StackPanel x:Name="ClientPanel">
+                            <TextBlock Text="Клиент (из справочника)" Classes="caption"/>
+                            <ComboBox x:Name="ClientBox" HorizontalAlignment="Stretch" SelectionChanged="ClientChanged"/>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="*,12,160">
+                            <StackPanel>
+                                <TextBlock Text="Зона доставки" Classes="caption"/>
+                                <ComboBox x:Name="ZoneBox" HorizontalAlignment="Stretch" SelectionChanged="ParamsChanged"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Вес, кг (до 30)" Classes="caption"/>
+                                <NumericUpDown x:Name="WeightBox" Minimum="0.1" Maximum="30" Increment="0.5"
+                                               Value="1" FormatString="0.##" ValueChanged="WeightChanged"/>
+                            </StackPanel>
+                        </Grid>
+                        <CheckBox x:Name="UrgentBox" Content="Срочная доставка (коэффициент 1,5)" IsCheckedChanged="UrgentChanged"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Адреса -->
+                <Border Classes="panel">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="Откуда забрать" Classes="subtitle"/>
+                        <StackPanel>
+                            <TextBlock Text="Адрес отправления" Classes="caption"/>
+                            <TextBox x:Name="PickupAddressBox" PlaceholderText="улица, дом, квартира / офис"/>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="*,12,200">
+                            <StackPanel>
+                                <TextBlock Text="Отправитель" Classes="caption"/>
+                                <TextBox x:Name="PickupContactBox"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Телефон отправителя" Classes="caption"/>
+                                <TextBox x:Name="PickupPhoneBox" PlaceholderText="+7 ..."/>
+                            </StackPanel>
+                        </Grid>
+
+                        <TextBlock Text="Куда доставить" Classes="subtitle" Margin="0,8,0,0"/>
+                        <StackPanel>
+                            <TextBlock Text="Адрес получения" Classes="caption"/>
+                            <TextBox x:Name="DeliveryAddressBox" PlaceholderText="улица, дом, квартира / офис"/>
+                        </StackPanel>
+                        <Grid ColumnDefinitions="*,12,200">
+                            <StackPanel>
+                                <TextBlock Text="Получатель" Classes="caption"/>
+                                <TextBox x:Name="DeliveryContactBox"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Телефон получателя" Classes="caption"/>
+                                <TextBox x:Name="DeliveryPhoneBox" PlaceholderText="+7 ..."/>
+                            </StackPanel>
+                        </Grid>
+                        <StackPanel>
+                            <TextBlock Text="Комментарий для курьера" Classes="caption"/>
+                            <TextBox x:Name="CommentBox" AcceptsReturn="True" Height="60" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ИТОГ -->
+        <Border Grid.Column="2" Classes="panel" VerticalAlignment="Top" Padding="20" Margin="0,40,0,0">
+            <StackPanel Spacing="10">
+                <TextBlock Text="Расчёт стоимости" Classes="subtitle"/>
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto" >
+                    <TextBlock Text="Тариф зоны" Classes="muted"/>
+                    <TextBlock Grid.Column="1" x:Name="RateText" Text="—"/>
+                    <TextBlock Grid.Row="1" Text="Вес груза" Classes="muted"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="WeightText" Text="—"/>
+                    <TextBlock Grid.Row="2" Text="Срочность" Classes="muted"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="UrgentText" Text="×1"/>
+                    <TextBlock Grid.Row="3" Text="Скидка клиента" Classes="muted"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="DiscountText" Text="0 %"/>
+                </Grid>
+                <Border Height="1" Background="{StaticResource LineBrush}"/>
+                <TextBlock Text="Итого к оплате" Classes="caption"/>
+                <TextBlock x:Name="TotalText" Text="—" FontSize="28" FontWeight="Bold"/>
+                <TextBlock x:Name="DiscountHint" Classes="muted" FontSize="12"
+                           Text="Скидка 10 % — если в прошлом месяце выполнено более 5 заказов клиента."/>
+                <Button x:Name="SaveButton" Content="Оформить заказ" Classes="amber"
+                        HorizontalAlignment="Stretch" Click="SaveClick"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

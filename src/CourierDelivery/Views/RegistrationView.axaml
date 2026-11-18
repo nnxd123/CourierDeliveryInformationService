@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="CourierDelivery.Views.RegistrationView"
+             Tag="Регистрация клиента">
+
+    <Border Classes="panel" Width="460" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="24">
+        <StackPanel Spacing="12">
+            <Button Content="← Назад" Classes="back" Click="BackClick"/>
+            <TextBlock Text="Регистрация клиента" Classes="title"/>
+            <TextBlock Text="После регистрации вы сможете оформлять заказы и следить за их статусом."
+                       Classes="muted" FontSize="13"/>
+
+            <Grid ColumnDefinitions="*,12,*">
+                <StackPanel>
+                    <TextBlock Text="Фамилия" Classes="caption"/>
+                    <TextBox x:Name="LastNameBox"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Имя" Classes="caption"/>
+                    <TextBox x:Name="FirstNameBox"/>
+                </StackPanel>
+            </Grid>
+            <StackPanel>
+                <TextBlock Text="Телефон" Classes="caption"/>
+                <TextBox x:Name="PhoneBox" PlaceholderText="+7 921 000-00-00"/>
+            </StackPanel>
+            <Grid ColumnDefinitions="*,12,*">
+                <StackPanel>
+                    <TextBlock Text="Логин" Classes="caption"/>
+                    <TextBox x:Name="LoginBox"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="Пароль" Classes="caption"/>
+                    <TextBox x:Name="PasswordBox" PasswordChar="●"/>
+                </StackPanel>
+            </Grid>
+
+            <Button x:Name="SaveButton" Content="Зарегистрироваться" Classes="amber"
+                    HorizontalAlignment="Stretch" Click="RegisterClick"/>
+        </StackPanel>
+    </Border>
+</UserControl>
