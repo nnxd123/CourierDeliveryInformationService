@@ -10,7 +10,18 @@ public partial class StaffView : UserControl
     {
         InitializeComponent();
         RoleBox.SelectedIndex = 0;
-        TransportBox.SelectedIndex = 0;
+        Loaded += async (_, _) =>
+        {
+            try
+            {
+                TransportBox.ItemsSource = await StaffService.GetTransportNamesAsync();
+                TransportBox.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MainWindow.Instance.ShowError(ex);
+            }
+        };
     }
 
     private string SelectedRole => (RoleBox.SelectedItem as ComboBoxItem)?.Content as string ?? Session.RoleCourier;
@@ -28,7 +39,7 @@ public partial class StaffView : UserControl
         try
         {
             string role = SelectedRole;
-            string? transport = (TransportBox.SelectedItem as ComboBoxItem)?.Content as string;
+            string? transport = TransportBox.SelectedItem as string;
 
             await StaffService.CreateEmployeeAsync(LoginBox.Text ?? "", PasswordBox.Text ?? "",
                 LastNameBox.Text ?? "", FirstNameBox.Text ?? "", PhoneBox.Text ?? "", role, transport);

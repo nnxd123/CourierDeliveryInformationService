@@ -1,1 +1,0 @@
-Server=localhost;Database=CourierDelivery;Trusted_Connection=True;TrustServerCertificate=True;Connect Timeout=5

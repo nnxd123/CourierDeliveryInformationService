@@ -9,7 +9,9 @@ public partial class Courier
 
     public int UserId { get; set; }
 
-    public string Transport { get; set; } = null!;
+    public int TransportId { get; set; }
+
+    public Transport Transport { get; set; } = null!;
 
     public bool IsActive { get; set; }
 

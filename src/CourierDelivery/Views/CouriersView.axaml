@@ -33,7 +33,7 @@
                                     </Border>
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                         <TextBlock Text="{Binding FullName}" Classes="subtitle"/>
-                                        <TextBlock Text="{Binding Transport}" Classes="muted" FontSize="13"/>
+                                        <TextBlock Text="{Binding Transport.Name}" Classes="muted" FontSize="13"/>
                                     </StackPanel>
                                 </Grid>
                                 <TextBlock Text="{Binding User.PhoneText}" FontSize="13"/>

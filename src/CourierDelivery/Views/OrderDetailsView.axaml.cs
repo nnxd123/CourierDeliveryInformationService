@@ -48,7 +48,7 @@ public partial class OrderDetailsView : UserControl
         ClientText.Text = $"{o.ClientName}, {o.Client?.PhoneText}";
         ZoneText.Text = $"{o.ZoneName} ({o.Zone?.RateText})";
         CargoText.Text = $"{o.WeightText}" + (o.IsUrgent ? ", срочная доставка" : ", обычная доставка");
-        CourierText.Text = o.Courier == null ? "не назначен" : $"{o.CourierName} ({o.Courier.Transport})";
+        CourierText.Text = o.Courier == null ? "не назначен" : $"{o.CourierName} ({o.Courier.Transport.Name})";
         CommentText.Text = string.IsNullOrWhiteSpace(o.Comment) ? "—" : o.Comment;
         CostText.Text = o.DiscountPercent > 0
             ? $"{o.CostText} (скидка {o.DiscountPercent} %)"

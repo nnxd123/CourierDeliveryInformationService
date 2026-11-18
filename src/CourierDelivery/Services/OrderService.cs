@@ -31,8 +31,6 @@ public static class OrderService
     public const string StatusCancelled = "Отменён";
 
     // Типы адресов — как в ограничении CHECK таблицы OrderAddresses
-    public const string AddressPickup = "Отправление";
-    public const string AddressDelivery = "Получение";
 
     // Запрос заказов вместе со всеми связанными данными
     private static IQueryable<Order> WithDetails(DeliveryContext db) => db.Orders
@@ -40,6 +38,7 @@ public static class OrderService
         .Include(o => o.Zone)
         .Include(o => o.Status)
         .Include(o => o.Courier).ThenInclude(c => c!.User)
+        .Include(o => o.Courier).ThenInclude(c => c!.Transport)
         .Include(o => o.OrderAddresses)
         .AsNoTracking();
 
@@ -152,14 +151,14 @@ public static class OrderService
         };
         order.OrderAddresses.Add(new OrderAddress
         {
-            AddressType = AddressPickup,
+            StopNumber = 1,
             Address = draft.PickupAddress.Trim(),
             ContactName = draft.PickupContact.Trim(),
             ContactPhone = pickupPhone
         });
         order.OrderAddresses.Add(new OrderAddress
         {
-            AddressType = AddressDelivery,
+            StopNumber = 2,
             Address = draft.DeliveryAddress.Trim(),
             ContactName = draft.DeliveryContact.Trim(),
             ContactPhone = deliveryPhone

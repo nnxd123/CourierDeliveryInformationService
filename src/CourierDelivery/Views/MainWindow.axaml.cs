@@ -67,7 +67,7 @@ public partial class MainWindow : Window
         if (Session.CurrentUser is { } user)
         {
             UserText.Text = user.FullName;
-            RoleText.Text = Session.RoleName;
+            RoleText.Text = user.Courier is { } courier ? $"{Session.RoleName} · {courier.Transport.Name}" : Session.RoleName;
             AuthButton.Content = "Выйти";
             AuthButton.Classes.Remove("amber");
             AuthButton.Classes.Add("outline");

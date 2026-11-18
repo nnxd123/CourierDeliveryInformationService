@@ -33,11 +33,7 @@
                 </StackPanel>
                 <StackPanel Grid.Column="2" x:Name="TransportPanel">
                     <TextBlock Text="Транспорт" Classes="caption"/>
-                    <ComboBox x:Name="TransportBox" HorizontalAlignment="Stretch">
-                        <ComboBoxItem Content="Пешком"/>
-                        <ComboBoxItem Content="Велосипед"/>
-                        <ComboBoxItem Content="Автомобиль"/>
-                    </ComboBox>
+                    <ComboBox x:Name="TransportBox" HorizontalAlignment="Stretch"/>
                 </StackPanel>
             </Grid>
             <Grid ColumnDefinitions="*,12,*">

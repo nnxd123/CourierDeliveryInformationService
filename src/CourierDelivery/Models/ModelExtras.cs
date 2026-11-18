@@ -44,7 +44,7 @@ public partial class Courier
 
     public bool IsFull => ActiveOrders >= PriceRules.MaxActiveOrders;
 
-    public override string ToString() => $"{FullName} · {Transport} · загрузка {LoadText}";
+    public override string ToString() => $"{FullName} · {Transport.Name} · загрузка {LoadText}";
 }
 
 public partial class Order
@@ -66,10 +66,10 @@ public partial class Order
     public string CostText => $"{TotalCost:N2} руб.";
 
     public OrderAddress? Pickup =>
-        OrderAddresses.FirstOrDefault(a => a.AddressType == OrderService.AddressPickup);
+        OrderAddresses.FirstOrDefault(a => a.StopNumber == 1);
 
     public OrderAddress? Delivery =>
-        OrderAddresses.FirstOrDefault(a => a.AddressType == OrderService.AddressDelivery);
+        OrderAddresses.FirstOrDefault(a => a.StopNumber == 2);
 
     public string Route => $"{Pickup?.Address ?? "—"}  →  {Delivery?.Address ?? "—"}";
 

@@ -8,6 +8,13 @@ namespace CourierDelivery.Services;
 // Работа с пользователями: регистрация клиентов, сотрудники, загрузка курьеров.
 public static class StaffService
 {
+    public static async Task<List<string>> GetTransportNamesAsync()
+    {
+        Session.RequireAdmin();
+        using var db = Db.Create();
+        return await db.Transports.OrderBy(t => t.TransportId).Select(t => t.Name).ToListAsync();
+    }
+
     /// <summary>
     /// Курьеры с количеством активных заказов (для раздела «Курьеры»).
     /// </summary>
@@ -17,6 +24,7 @@ public static class StaffService
         using var db = Db.Create();
 
         var couriers = await db.Couriers
+            .Include(c => c.Transport)
             .Include(c => c.User)
             .AsNoTracking()
             .OrderBy(c => c.User.LastName)
@@ -132,7 +140,7 @@ public static class StaffService
 
         if (roleName == Session.RoleCourier)
         {
-            db.Couriers.Add(new Courier { UserId = user.UserId, Transport = transport!.Trim(), IsActive = true });
+            db.Couriers.Add(new Courier { UserId = user.UserId, TransportId = await db.Transports.Where(t => t.Name == transport).Select(t => t.TransportId).SingleAsync(), IsActive = true });
             await db.SaveChangesAsync();
         }
 

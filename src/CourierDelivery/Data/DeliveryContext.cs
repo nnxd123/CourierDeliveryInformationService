@@ -13,6 +13,8 @@ public partial class DeliveryContext : DbContext
     {
     }
 
+    public DbSet<Transport> Transports => Set<Transport>();
+
     public virtual DbSet<Courier> Couriers { get; set; }
 
     public virtual DbSet<Order> Orders { get; set; }
@@ -29,6 +31,13 @@ public partial class DeliveryContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Transport>(entity =>
+        {
+            entity.Property(t => t.TransportId).HasColumnName("transport_id");
+            entity.Property(t => t.Name).HasColumnName("name").HasMaxLength(50);
+            entity.HasIndex(t => t.Name).IsUnique();
+        });
+
         modelBuilder.Entity<Courier>(entity =>
         {
             entity.HasKey(e => e.CourierId);
@@ -39,10 +48,8 @@ public partial class DeliveryContext : DbContext
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
                 .HasColumnName("is_active");
-            entity.Property(e => e.Transport)
-                .HasMaxLength(50)
-                .HasDefaultValue("Пешком")
-                .HasColumnName("transport");
+            entity.Property(e => e.TransportId).HasColumnName("transport_id");
+            entity.HasOne(e => e.Transport).WithMany().HasForeignKey(e => e.TransportId);
             entity.Property(e => e.UserId).HasColumnName("user_id");
 
             entity.HasOne(d => d.User).WithOne(p => p.Courier)
@@ -97,15 +104,14 @@ public partial class DeliveryContext : DbContext
         {
             entity.HasKey(e => e.AddressId);
 
-            entity.HasIndex(e => new { e.OrderId, e.AddressType }, "uq_order_address").IsUnique();
+            entity.HasIndex(e => new { e.OrderId, e.StopNumber }, "uq_order_address").IsUnique();
 
             entity.Property(e => e.AddressId).HasColumnName("address_id");
             entity.Property(e => e.Address)
                 .HasMaxLength(255)
                 .HasColumnName("address");
-            entity.Property(e => e.AddressType)
-                .HasMaxLength(20)
-                .HasColumnName("address_type");
+            entity.Property(e => e.StopNumber)
+                .HasColumnName("stop_number");
             entity.Property(e => e.ContactName)
                 .HasMaxLength(150)
                 .HasColumnName("contact_name");

@@ -9,7 +9,7 @@ public partial class OrderAddress
 
     public int OrderId { get; set; }
 
-    public string AddressType { get; set; } = null!;
+    public byte StopNumber { get; set; }
 
     public string Address { get; set; } = null!;
 

@@ -35,7 +35,7 @@
 src/CourierDelivery/
 ├── Assets/          # logo.png, courier.ico
 ├── Data/            # Db.cs (фабрика подключений), DeliveryContext.cs (EF Core)
-├── Models/          # Role, User, Courier, Zone, Status, Order, OrderAddress + ModelExtras
+├── Models/          # Role, User, Transport, Courier, Zone, Status, Order, OrderAddress + ModelExtras
 ├── Services/        # Session, PriceRules, OrderService, StaffService, ZoneService, AppException
 ├── Views/           # MainWindow и 9 страниц: Tariffs, Login, Registration, Orders, OrderCreate,
 │                    # OrderDetails, Couriers, Zones, Staff; UiSupport

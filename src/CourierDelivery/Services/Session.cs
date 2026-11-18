@@ -37,7 +37,7 @@ public static class Session
 
         var user = await db.Users
             .Include(u => u.Role)
-            .Include(u => u.Courier)
+            .Include(u => u.Courier).ThenInclude(c => c!.Transport)
             .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Login.ToLower() == normalized);
 
